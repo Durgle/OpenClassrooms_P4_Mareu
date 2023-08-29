@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/meeting_list_item"
+    tools:showIn="@layout/fragment_meeting_list"
+    android:layout_marginBottom="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/meeting_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/meeting_item_room_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/remove_button"
+            android:padding="16dp"
+            android:src="@drawable/circle"
+            android:scaleX="2"
+            android:scaleY="2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <TextView
+            android:id="@+id/meeting_item_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/meeting_item_participants"
+            app:layout_constraintStart_toEndOf="@+id/meeting_item_room_color"
+            app:layout_constraintEnd_toStartOf="@+id/meeting_item_iv_delete"
+            tools:text="Réunion A - 14h00 - Peach" />
+
+        <TextView
+            android:id="@+id/meeting_item_participants"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            app:layout_constraintTop_toBottomOf="@+id/meeting_item_title"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/meeting_item_room_color"
+            app:layout_constraintEnd_toStartOf="@+id/meeting_item_iv_delete"
+            tools:text="maxime@lamzone.com,alex@lamzone.com,viviane@lamzone.com" />
+
+        <ImageView
+            android:id="@+id/meeting_item_iv_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/remove_button"
+            app:tint="@color/light_grey"
+            android:padding="12dp"
+            android:src="@drawable/baseline_delete_24"
+            app:layout_constraintTop_toTopOf="@+id/meeting_item_title"
+            app:layout_constraintBottom_toBottomOf="@+id/meeting_item_participants"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
