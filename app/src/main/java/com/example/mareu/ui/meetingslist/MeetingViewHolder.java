@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mareu.data.meeting.Meeting;
 import com.example.mareu.databinding.MeetingListItemBinding;
 
-import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
 
 public class MeetingViewHolder extends RecyclerView.ViewHolder {
@@ -18,22 +17,16 @@ public class MeetingViewHolder extends RecyclerView.ViewHolder {
 
     public MeetingViewHolder(@NonNull View itemView) {
         super(itemView);
-        this.binding = MeetingListItemBinding.bind(itemView);
+        binding = MeetingListItemBinding.bind(itemView);
     }
 
     public void bind(Meeting meeting) {
         binding.meetingItemRoomColor.setColorFilter(ResourcesCompat.getColor(binding.getRoot().getResources(), meeting.getRoom().getColor(),null));
-        binding.meetingItemTitle.setText(
-                String.format("%s - %s - %s",
-                        meeting.getSubject(),
-                        meeting.getTime().format(DateTimeFormatter.ofPattern("HH:mm")),
-                        meeting.getRoom().getName()
-                )
-        );
+        binding.meetingItemTitle.setText(meeting.getFormattedSubject());
         binding.meetingItemParticipants.setText(
                 meeting.getParticipantList()
                         .stream()
-                        .map(n -> String.valueOf(n))
+                        .map(String::valueOf)
                         .collect(Collectors.joining(","))
         );
     }

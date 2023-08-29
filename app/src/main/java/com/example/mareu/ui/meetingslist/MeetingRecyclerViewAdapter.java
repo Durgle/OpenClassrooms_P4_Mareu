@@ -1,24 +1,20 @@
 package com.example.mareu.ui.meetingslist;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 
 import com.example.mareu.R;
 import com.example.mareu.data.meeting.Meeting;
 
-import java.util.List;
+public class MeetingRecyclerViewAdapter extends ListAdapter<Meeting,MeetingViewHolder> {
 
-public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingViewHolder> {
-
-    private List<Meeting> mMeetingList;
-
-    public MeetingRecyclerViewAdapter(List<Meeting> meetings) {
-        this.mMeetingList = meetings;
+    protected MeetingRecyclerViewAdapter() {
+        super(DIFF_CALLBACK);
     }
 
     @NonNull
@@ -31,12 +27,21 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingView
 
     @Override
     public void onBindViewHolder(@NonNull MeetingViewHolder holder, int position) {
-        Meeting meeting = mMeetingList.get(position);
-        holder.bind(meeting);
+        holder.bind(getItem(position));
     }
 
-    @Override
-    public int getItemCount() {
-        return mMeetingList.size();
-    }
+    public static final DiffUtil.ItemCallback<Meeting> DIFF_CALLBACK =
+            new DiffUtil.ItemCallback<Meeting>() {
+                @Override
+                public boolean areItemsTheSame(@NonNull Meeting oldUser, @NonNull Meeting newUser) {
+                    return oldUser.getId() == newUser.getId();
+                }
+                @Override
+                public boolean areContentsTheSame(@NonNull Meeting oldUser, @NonNull Meeting newUser) {
+                    return oldUser.getFormattedSubject().equals(newUser.getFormattedSubject())
+                    && oldUser.getParticipantList().equals(newUser.getParticipantList())
+                    && oldUser.getRoom().getColor() == newUser.getRoom().getColor();
+                }
+
+            };
 }

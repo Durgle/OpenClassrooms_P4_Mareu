@@ -26,8 +26,8 @@ import java.util.List;
 public class MeetingListFragment extends Fragment {
 
     private FragmentMeetingListBinding binding;
-    private MeetingRecyclerViewAdapter mMeetingRecyclerViewAdapterAdapter;
     private MeetingViewModel mViewModel;
+    MeetingRecyclerViewAdapter mAdapter;
 
     public static MeetingListFragment newInstance() {
         return new MeetingListFragment();
@@ -36,6 +36,7 @@ public class MeetingListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAdapter = new MeetingRecyclerViewAdapter();
         mViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(MeetingViewModel.class);
     }
 
@@ -49,13 +50,8 @@ public class MeetingListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mViewModel.initList();
-        mViewModel.mMeetingList.observe(getViewLifecycleOwner(), new Observer<List<Meeting>>() {
-
-            @Override
-            public void onChanged(List<Meeting> meetings) {
-                binding.meetingList.setAdapter(new MeetingRecyclerViewAdapter(meetings));
-            }
-        });
+        mViewModel.mMeetingList.observe(getViewLifecycleOwner(), list -> mAdapter.submitList(list));
+        binding.meetingList.setAdapter(mAdapter);
     }
 
     @Override
