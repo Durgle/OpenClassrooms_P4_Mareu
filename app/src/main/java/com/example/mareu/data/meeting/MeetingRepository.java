@@ -21,7 +21,7 @@ public class MeetingRepository {
      * @return List of {@link Meeting}
      */
     public List<Meeting> getMeetingList() {
-        return mMeetingList;
+        return new ArrayList<>(mMeetingList);
     }
 
     /**
@@ -69,9 +69,12 @@ public class MeetingRepository {
     /**
      * Delete the given {@link Meeting}
      *
-     * @param meeting {@link Meeting}
+     * @param meetingId Meeting Id
      */
-    public void delete(@NonNull Meeting meeting) {
-        mMeetingList.remove(meeting);
+    public void delete(long meetingId) {
+        Meeting meeting = this.getMeetingById(meetingId);
+        if(meeting != null) {
+            mMeetingList.remove(meeting);
+        }
     }
 }

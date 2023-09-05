@@ -7,6 +7,7 @@ import com.example.mareu.data.room.Room;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 
 public class Meeting {
 
@@ -67,4 +68,20 @@ public class Meeting {
         );
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Meeting meeting = (Meeting) o;
+        return mId == meeting.mId &&
+                mTime.equals(meeting.mTime) &&
+                mRoom.equals(meeting.mRoom) &&
+                mSubject.equals(meeting.mSubject) &&
+                mParticipantList.equals(meeting.mParticipantList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mId, mTime, mRoom, mSubject, mParticipantList);
+    }
 }

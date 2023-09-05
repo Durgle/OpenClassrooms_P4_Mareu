@@ -4,7 +4,6 @@
     android:id="@+id/main_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:name="com.example.mareu.ui.meetingslist.MeetingListFragment"
     tools:context=".MainActivity"
     tools:layout="@layout/fragment_meeting_list">
 </androidx.fragment.app.FragmentContainerView>

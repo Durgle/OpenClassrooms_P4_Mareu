@@ -38,7 +38,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/meeting_item_participants"
             app:layout_constraintStart_toEndOf="@+id/meeting_item_room_color"
-            app:layout_constraintEnd_toStartOf="@+id/meeting_item_iv_delete"
+            app:layout_constraintEnd_toStartOf="@+id/meeting_item_delete"
             tools:text="Réunion A - 14h00 - Peach" />
 
         <TextView
@@ -53,11 +53,11 @@
             app:layout_constraintTop_toBottomOf="@+id/meeting_item_title"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/meeting_item_room_color"
-            app:layout_constraintEnd_toStartOf="@+id/meeting_item_iv_delete"
+            app:layout_constraintEnd_toStartOf="@+id/meeting_item_delete"
             tools:text="maxime@lamzone.com,alex@lamzone.com,viviane@lamzone.com" />
 
         <ImageView
-            android:id="@+id/meeting_item_iv_delete"
+            android:id="@+id/meeting_item_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/remove_button"

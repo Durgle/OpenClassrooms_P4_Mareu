@@ -13,8 +13,11 @@ import com.example.mareu.data.meeting.Meeting;
 
 public class MeetingRecyclerViewAdapter extends ListAdapter<Meeting,MeetingViewHolder> {
 
-    protected MeetingRecyclerViewAdapter() {
+    private final OnItemClickListener mListener;
+
+    protected MeetingRecyclerViewAdapter(OnItemClickListener listener) {
         super(DIFF_CALLBACK);
+        mListener = listener;
     }
 
     @NonNull
@@ -27,21 +30,21 @@ public class MeetingRecyclerViewAdapter extends ListAdapter<Meeting,MeetingViewH
 
     @Override
     public void onBindViewHolder(@NonNull MeetingViewHolder holder, int position) {
-        holder.bind(getItem(position));
+        holder.bind(getItem(position),mListener);
     }
 
     public static final DiffUtil.ItemCallback<Meeting> DIFF_CALLBACK =
             new DiffUtil.ItemCallback<Meeting>() {
                 @Override
-                public boolean areItemsTheSame(@NonNull Meeting oldUser, @NonNull Meeting newUser) {
-                    return oldUser.getId() == newUser.getId();
+                public boolean areItemsTheSame(@NonNull Meeting oldMeeting, @NonNull Meeting newMeeting) {
+                    return oldMeeting.getId() == newMeeting.getId();
                 }
                 @Override
-                public boolean areContentsTheSame(@NonNull Meeting oldUser, @NonNull Meeting newUser) {
-                    return oldUser.getFormattedSubject().equals(newUser.getFormattedSubject())
-                    && oldUser.getParticipantList().equals(newUser.getParticipantList())
-                    && oldUser.getRoom().getColor() == newUser.getRoom().getColor();
+                public boolean areContentsTheSame(@NonNull Meeting oldMeeting, @NonNull Meeting newMeeting) {
+                    return oldMeeting.equals(newMeeting);
                 }
 
             };
+
+
 }

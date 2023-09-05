@@ -13,14 +13,14 @@ import java.util.stream.Collectors;
 
 public class MeetingViewHolder extends RecyclerView.ViewHolder {
 
-    private MeetingListItemBinding binding;
+    private final MeetingListItemBinding binding;
 
     public MeetingViewHolder(@NonNull View itemView) {
         super(itemView);
         binding = MeetingListItemBinding.bind(itemView);
     }
 
-    public void bind(Meeting meeting) {
+    public void bind(@NonNull Meeting meeting,@NonNull OnItemClickListener listener) {
         binding.meetingItemRoomColor.setColorFilter(ResourcesCompat.getColor(binding.getRoot().getResources(), meeting.getRoom().getColor(),null));
         binding.meetingItemTitle.setText(meeting.getFormattedSubject());
         binding.meetingItemParticipants.setText(
@@ -29,5 +29,11 @@ public class MeetingViewHolder extends RecyclerView.ViewHolder {
                         .map(String::valueOf)
                         .collect(Collectors.joining(","))
         );
+        binding.meetingItemDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onDeleteClick(meeting.getId());
+            }
+        });
     }
 }

@@ -1,7 +1,5 @@
 package com.example.mareu.data.room;
 
-import android.graphics.drawable.Drawable;
-
 import androidx.annotation.NonNull;
 
 public class Room {
@@ -33,5 +31,11 @@ public class Room {
 
     public int getColor() {
         return mColor;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return mName;
     }
 }

@@ -6,17 +6,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.Observer;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.mareu.data.meeting.Meeting;
+import com.example.mareu.R;
 import com.example.mareu.databinding.FragmentMeetingListBinding;
 import com.example.mareu.injection.ViewModelFactory;
-
-import java.util.List;
+import com.example.mareu.ui.meetingadd.MeetingAddFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,7 +34,7 @@ public class MeetingListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAdapter = new MeetingRecyclerViewAdapter();
+        mAdapter = new MeetingRecyclerViewAdapter(meetingId -> mViewModel.deleteMeeting(meetingId));
         mViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(MeetingViewModel.class);
     }
 
@@ -50,8 +48,14 @@ public class MeetingListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mViewModel.initList();
-        mViewModel.mMeetingList.observe(getViewLifecycleOwner(), list -> mAdapter.submitList(list));
+        mViewModel.getMeetingList().observe(getViewLifecycleOwner(), list -> mAdapter.submitList(list));
         binding.meetingList.setAdapter(mAdapter);
+        binding.addMeeting.setOnClickListener(view1 -> getParentFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_container, MeetingAddFragment.newInstance())
+                .addToBackStack("startNewMeeting")
+                .commit()
+        );
     }
 
     @Override
