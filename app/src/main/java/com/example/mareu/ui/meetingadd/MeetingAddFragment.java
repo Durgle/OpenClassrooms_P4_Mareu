@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.example.mareu.R;
 import com.example.mareu.data.room.Room;
 import com.example.mareu.databinding.FragmentMeetingAddBinding;
 import com.example.mareu.injection.ViewModelFactory;
@@ -51,8 +52,8 @@ public class MeetingAddFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         binding = FragmentMeetingAddBinding.inflate(inflater, container, false);
+        requireActivity().setTitle(R.string.add_meeting_fragment_name);
         return binding.getRoot();
     }
 

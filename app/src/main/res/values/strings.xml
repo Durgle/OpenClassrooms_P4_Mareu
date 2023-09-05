@@ -1,7 +1,14 @@
 <resources>
-    <string name="app_name">Ma réu</string>
+    <string name="app_name">Ma réeu</string>
+    <string name="add_meeting_fragment_name">Meeting creation</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="remove_button">Remove</string>
     <string name="add_button">Add</string>
+    <string name="subject">Subject</string>
+    <string name="time">Time</string>
+    <string name="room">Room</string>
+    <string name="participant_email">Participant email</string>
+    <string name="participant_email_notice">Separate participant email with comma</string>
+    <string name="submit">Submit</string>
 </resources>

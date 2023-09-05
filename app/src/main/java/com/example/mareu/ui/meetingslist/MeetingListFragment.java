@@ -41,6 +41,7 @@ public class MeetingListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMeetingListBinding.inflate(inflater, container, false);
+        requireActivity().setTitle(R.string.app_name);
         return binding.getRoot();
     }
 

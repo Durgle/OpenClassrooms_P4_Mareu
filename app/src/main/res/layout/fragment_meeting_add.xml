@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:hint="Subject">
+            android:hint="@string/subject">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/add_meeting_field_subject"
@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:hint="Time">
+            android:hint="@string/time">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/add_meeting_field_time"
@@ -56,7 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:hint="Room">
+            android:hint="@string/room">
 
             <AutoCompleteTextView
                 android:id="@+id/add_meeting_field_room"
@@ -74,7 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:hint="Participants" >
+            android:hint="@string/participant_email" >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/add_meeting_field_participants"
@@ -88,7 +88,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Separate participants with comma"
+                android:hint="@string/participant_email_notice"
                 android:textStyle="italic"
                 />
         </com.google.android.material.textfield.TextInputLayout>
@@ -100,7 +100,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:text="Submit" />
+            android:text="@string/submit" />
 
     </LinearLayout>
 
