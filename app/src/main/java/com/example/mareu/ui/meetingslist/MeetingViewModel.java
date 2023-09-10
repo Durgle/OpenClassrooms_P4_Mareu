@@ -21,7 +21,6 @@ public class MeetingViewModel  extends ViewModel {
 
     public MeetingViewModel(MeetingRepository meetingRepository) {
         this.mMeetingRepository = meetingRepository;
-        this.mMeetingRepository.addFakeData();
     }
 
     public void initList(){
