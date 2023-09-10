@@ -11,4 +11,9 @@
     <string name="participant_email">Participant email</string>
     <string name="participant_email_notice">Separate participant email with comma</string>
     <string name="submit">Submit</string>
+    <string name="add_meeting_success">Meeting created successfully</string>
+    <string name="add_meeting_subject_error">The subject is required</string>
+    <string name="add_meeting_participant_error">At least one participant is required</string>
+    <string name="add_meeting_time_error">The time is required</string>
+    <string name="add_meeting_room_error">The room is required</string>
 </resources>
