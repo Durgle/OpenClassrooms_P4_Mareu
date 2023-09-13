@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mareu.data.meeting.Meeting;
 import com.example.mareu.databinding.MeetingListItemBinding;
+import com.example.mareu.ui.meetingslist.listener.OnItemClickListener;
 
 import java.util.stream.Collectors;
 

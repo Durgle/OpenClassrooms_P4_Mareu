@@ -16,4 +16,7 @@
     <string name="add_meeting_participant_error">At least one participant is required</string>
     <string name="add_meeting_time_error">The time is required</string>
     <string name="add_meeting_room_error">The room is required</string>
+    <string name="cancel">Cancel</string>
+    <string name="clear_filter">Clear filter</string>
+    <string name="filter">Filter</string>
 </resources>

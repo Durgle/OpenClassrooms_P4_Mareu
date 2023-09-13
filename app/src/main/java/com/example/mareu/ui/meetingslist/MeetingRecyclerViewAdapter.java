@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.ListAdapter;
 
 import com.example.mareu.R;
 import com.example.mareu.data.meeting.Meeting;
+import com.example.mareu.ui.meetingslist.listener.OnItemClickListener;
 
 public class MeetingRecyclerViewAdapter extends ListAdapter<Meeting,MeetingViewHolder> {
 

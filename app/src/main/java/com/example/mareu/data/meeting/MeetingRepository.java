@@ -9,6 +9,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class MeetingRepository {
 
@@ -30,7 +31,18 @@ public class MeetingRepository {
     public void addFakeData() {
 
         for (int i = 1; i < 6; i++) {
-            mMeetingList.add(new Meeting(mLastMeetingId,LocalTime.now(), RoomBank.getRandomRoom(),String.format("%s %s", "Meeting", i),Arrays.asList("user1@email.com","user2@email.com","user3@email.com")));
+            Random r = new Random();
+            int hour = r.nextInt(11) + 1;
+            int min = r.nextInt(59);
+
+            mMeetingList.add(
+                    new Meeting(
+                            mLastMeetingId,LocalTime.of(hour,min),
+                            RoomBank.getRandomRoom(),
+                            String.format("%s %s", "Meeting", i),
+                            Arrays.asList("user1@email.com","user2@email.com","user3@email.com")
+                    )
+            );
             mLastMeetingId++;
         }
 

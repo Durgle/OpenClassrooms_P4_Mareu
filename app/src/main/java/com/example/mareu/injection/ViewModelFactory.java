@@ -7,6 +7,7 @@ import com.example.mareu.data.meeting.MeetingRepository;
 import com.example.mareu.data.room.RoomBank;
 import com.example.mareu.data.room.RoomRepository;
 import com.example.mareu.ui.meetingadd.AddMeetingViewModel;
+import com.example.mareu.ui.meetingfilter.FilterViewModel;
 import com.example.mareu.ui.meetingslist.MeetingViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -42,6 +43,9 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         }
         if (modelClass.isAssignableFrom(AddMeetingViewModel.class)) {
             return (T) new AddMeetingViewModel(this.mMeetingRepository,this.mRoomRepository);
+        }
+        if (modelClass.isAssignableFrom(FilterViewModel.class)) {
+            return (T) new FilterViewModel(this.mRoomRepository);
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }

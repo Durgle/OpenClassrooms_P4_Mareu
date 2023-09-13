@@ -1,4 +1,4 @@
-package com.example.mareu.ui.meetingslist;
+package com.example.mareu.ui.meetingslist.listener;
 
 public interface OnItemClickListener {
 
