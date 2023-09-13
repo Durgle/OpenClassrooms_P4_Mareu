@@ -56,7 +56,7 @@ public class FilterDialogFragment extends DialogFragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        listener = (OnFilterAppliedListener) context;
+        listener = (OnFilterAppliedListener) getParentFragment();
     }
 
     @Nullable
