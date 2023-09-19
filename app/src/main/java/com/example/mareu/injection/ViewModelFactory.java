@@ -1,8 +1,11 @@
 package com.example.mareu.injection;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.viewmodel.CreationExtras;
 
+import com.example.mareu.data.filter.FilterRepository;
 import com.example.mareu.data.meeting.MeetingRepository;
 import com.example.mareu.data.room.RoomBank;
 import com.example.mareu.data.room.RoomRepository;
@@ -15,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
 public class ViewModelFactory implements ViewModelProvider.Factory {
     private final RoomRepository mRoomRepository;
     private final MeetingRepository mMeetingRepository;
+    private final FilterRepository mFilterRepository;
     private static ViewModelFactory factory;
 
     public static ViewModelFactory getInstance() {
@@ -32,6 +36,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         RoomBank roomBank = RoomBank.getInstance();
         this.mRoomRepository = new RoomRepository(roomBank);
         this.mMeetingRepository = new MeetingRepository();
+        this.mFilterRepository = new FilterRepository();
     }
 
     @SuppressWarnings("unchecked")
@@ -39,14 +44,20 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     @NotNull
     public <T extends ViewModel> T create(Class<T> modelClass) {
         if (modelClass.isAssignableFrom(MeetingViewModel.class)) {
-            return (T) new MeetingViewModel(this.mMeetingRepository);
+            return (T) new MeetingViewModel(this.mMeetingRepository, this.mFilterRepository);
         }
         if (modelClass.isAssignableFrom(AddMeetingViewModel.class)) {
-            return (T) new AddMeetingViewModel(this.mMeetingRepository,this.mRoomRepository);
+            return (T) new AddMeetingViewModel(this.mMeetingRepository, this.mRoomRepository);
         }
         if (modelClass.isAssignableFrom(FilterViewModel.class)) {
-            return (T) new FilterViewModel(this.mRoomRepository);
+            return (T) new FilterViewModel(this.mRoomRepository, this.mFilterRepository);
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
+    }
+
+    @NonNull
+    @Override
+    public <T extends ViewModel> T create(@NonNull Class<T> modelClass, @NonNull CreationExtras extras) {
+        return ViewModelProvider.Factory.super.create(modelClass, extras);
     }
 }

@@ -2,13 +2,15 @@ package com.example.mareu.data.room;
 
 import androidx.annotation.NonNull;
 
+import java.util.Objects;
+
 public class Room {
 
     private final long mId;
     @NonNull
     private final String mName;
 
-    private  final int mColor;
+    private final int mColor;
 
     public Room(
             long id,
@@ -37,5 +39,18 @@ public class Room {
     @Override
     public String toString() {
         return mName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Room room = (Room) o;
+        return mId == room.mId && mColor == room.mColor && mName.equals(room.mName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mId, mName, mColor);
     }
 }

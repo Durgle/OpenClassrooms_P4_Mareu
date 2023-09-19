@@ -1,12 +1,6 @@
 package com.example.mareu.ui.meetingadd;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -14,6 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mareu.R;
 import com.example.mareu.data.room.Room;
@@ -56,18 +55,17 @@ public class MeetingAddFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mViewModel.getErrorMessage().observe(
+        mViewModel.getMessage().observe(
                 getViewLifecycleOwner(),
-                errorMessage -> Snackbar.make(requireView(), errorMessage, Snackbar.LENGTH_SHORT).show()
-        );
-        mViewModel.isMeetingCreated().observe(
-                getViewLifecycleOwner(),
-                meetingCreated -> {
-                    if(meetingCreated) {
-                        Toast.makeText(requireContext(), R.string.add_meeting_success, Toast.LENGTH_SHORT).show();
+                message -> {
+                    if (message.isSuccess()) {
+                        Toast.makeText(requireContext(), message.getMessageResource(), Toast.LENGTH_SHORT).show();
                         getParentFragmentManager().popBackStack();
+                    } else {
+                        Snackbar.make(requireView(), message.getMessageResource(), Snackbar.LENGTH_SHORT).show();
                     }
-                });
+                }
+        );
 
         initSubjectInput();
         initTimePicker();
@@ -76,7 +74,7 @@ public class MeetingAddFragment extends Fragment {
         initSubmitButton();
     }
 
-    void initSubjectInput(){
+    void initSubjectInput() {
         binding.addMeetingFieldSubject.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -113,8 +111,8 @@ public class MeetingAddFragment extends Fragment {
     void initTimePicker() {
         mViewModel.getSelectedTime().observe(
                 getViewLifecycleOwner(), localTime -> {
-            binding.addMeetingFieldTime.setText(localTime);
-        });
+                    binding.addMeetingFieldTime.setText(localTime);
+                });
         binding.addMeetingFieldTime.setOnClickListener(v -> showTimePickerDialog());
     }
 
@@ -129,7 +127,7 @@ public class MeetingAddFragment extends Fragment {
         materialTimePicker.addOnPositiveButtonClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mViewModel.onSelectedTime(materialTimePicker.getHour(),materialTimePicker.getMinute());
+                mViewModel.onSelectedTime(materialTimePicker.getHour(), materialTimePicker.getMinute());
             }
         });
 

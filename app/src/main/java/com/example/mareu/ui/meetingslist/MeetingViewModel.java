@@ -4,80 +4,68 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
+import com.example.mareu.data.filter.FilterRepository;
 import com.example.mareu.data.meeting.Meeting;
 import com.example.mareu.data.meeting.MeetingRepository;
-import com.example.mareu.data.room.Room;
-import com.example.mareu.data.room.RoomRepository;
+import com.example.mareu.ui.meetingfilter.FilterState;
 
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class MeetingViewModel  extends ViewModel {
+public class MeetingViewModel extends ViewModel {
 
     private final MeetingRepository mMeetingRepository;
-    private final MutableLiveData<List<Meeting>> mMeetingList = new MutableLiveData<>();
-    private final MutableLiveData<List<Meeting>> mFilteredMeetings = new MutableLiveData<>();
-    private final MediatorLiveData<List<Meeting>> mCombinedMeetings = new MediatorLiveData<>();
+    private final FilterRepository mFilterRepository;
+    private final MutableLiveData<List<Meeting>> mMeetingList = new MediatorLiveData<>();
+    private final MediatorLiveData<List<Meeting>> mFilteredMeetingList = new MediatorLiveData<>();
 
-    public MeetingViewModel(MeetingRepository meetingRepository) {
+    public MeetingViewModel(MeetingRepository meetingRepository, FilterRepository filterRepository) {
         this.mMeetingRepository = meetingRepository;
+        this.mFilterRepository = filterRepository;
 
         meetingRepository.addFakeData();
-        mCombinedMeetings.addSource(mMeetingList,new Observer<List<Meeting>>() {
-            @Override
-            public void onChanged(List<Meeting> meetingList) {
-                combine(meetingList, mFilteredMeetings.getValue());
-            }
-        });
-        mCombinedMeetings.addSource(mFilteredMeetings,new Observer<List<Meeting>>() {
-            @Override
-            public void onChanged(List<Meeting> meetingList) {
-                combine(mMeetingList.getValue(), meetingList);
-            }
-        });
+        mFilteredMeetingList.addSource(
+                mMeetingList, meetingList -> combine(meetingList, mFilterRepository.getFilterState().getValue())
+        );
+        mFilteredMeetingList.addSource(
+                filterRepository.getFilterState(), filterState -> combine(mMeetingList.getValue(), filterState)
+        );
     }
 
     public void initList() {
         this.mMeetingList.setValue(mMeetingRepository.getMeetingList());
     }
 
-    private void combine(@Nullable List<Meeting> meetingList, @Nullable List<Meeting> filteredMeetingList) {
+    private void combine(@Nullable List<Meeting> meetingList, @Nullable FilterState filterState) {
 
-        List<Meeting> combinedMeeting = new ArrayList<>();
-        for (Meeting meeting : meetingList) {
-            if(filteredMeetingList == null || filteredMeetingList.contains(meeting)){
-                combinedMeeting.add(meeting);
-            }
+        if (meetingList != null && filterState != null) {
+
+            Predicate<Meeting> doNotFilter = meeting -> true;
+            Predicate<Meeting> timeFilter = meeting -> meeting.getTime().equals(filterState.getTime());
+            Predicate<Meeting> roomFilter = meeting -> meeting.getRoom().getId() == filterState.getRoom().getId();
+
+            mFilteredMeetingList.setValue(
+                    meetingList.stream()
+                            .filter(filterState.getTime() == null ? doNotFilter : timeFilter)
+                            .filter(filterState.getRoom() == null ? doNotFilter : roomFilter)
+                            .collect(Collectors.toList())
+            );
+        } else {
+            mFilteredMeetingList.setValue(meetingList);
         }
-        mCombinedMeetings.setValue(combinedMeeting);
+
     }
 
     public void deleteMeeting(long meetingId) {
         mMeetingRepository.delete(meetingId);
-        this.mMeetingList.setValue(mMeetingRepository.getMeetingList());
+        initList();
     }
 
-    public LiveData<List<Meeting>> getCombinedMeetings() {
-        return mCombinedMeetings;
-    }
-
-    public void onAppliedFilter(LocalTime time, Room room) {
-
-        if(mMeetingList.getValue() != null) {
-            List<Meeting> list = mMeetingList.getValue()
-                    .stream()
-                    .filter(meeting -> time == null || meeting.getTime().equals(time))
-                    .filter(meeting -> room == null || meeting.getRoom().getId() == room.getId())
-                    .collect(Collectors.toList());
-
-            mFilteredMeetings.setValue(list);
-        }
-
+    public LiveData<List<Meeting>> getMeetingList() {
+        return mFilteredMeetingList;
     }
 
 }

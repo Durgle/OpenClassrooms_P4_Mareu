@@ -2,7 +2,6 @@ package com.example.mareu.ui.meetingfilter;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,6 @@ import com.example.mareu.R;
 import com.example.mareu.data.room.Room;
 import com.example.mareu.databinding.DialogFilterBinding;
 import com.example.mareu.injection.ViewModelFactory;
-import com.example.mareu.ui.meetingslist.listener.OnFilterAppliedListener;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 
@@ -28,7 +26,6 @@ public class FilterDialogFragment extends DialogFragment {
 
     private DialogFilterBinding binding;
     private FilterViewModel mViewModel;
-    private OnFilterAppliedListener listener;
 
     @NonNull
     @Override
@@ -41,7 +38,7 @@ public class FilterDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setView(view);
         builder.setPositiveButton(R.string.filter, (dialog, which) -> {
-            listener.onFilterApplied(mViewModel.getSelectedTime().getValue(),mViewModel.getSelectedRoom().getValue());
+            mViewModel.confirmFilters();
             dismiss();
         }).setNegativeButton(R.string.cancel, (dialog, which) -> {
             dismiss();
@@ -53,12 +50,6 @@ public class FilterDialogFragment extends DialogFragment {
         return builder.create();
     }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        listener = (OnFilterAppliedListener) getParentFragment();
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,15 +57,17 @@ public class FilterDialogFragment extends DialogFragment {
         initTimeSelector();
         mViewModel.getFormattedSelectedTime().observe(
                 getViewLifecycleOwner(), localTime -> {
-                    if(localTime != null) {
+                    if (localTime != null) {
                         binding.dialogFieldTime.setText(localTime);
                     }
                 });
+        mViewModel.getSelectedRoomText().observe(
+                getViewLifecycleOwner(), textRoom -> {
+                    if (textRoom != null) {
+                        binding.dialogFieldRoom.setText(textRoom);
+                    }
+                });
         return binding.getRoot();
-    }
-
-    public void setListener(OnFilterAppliedListener listener) {
-        this.listener = listener;
     }
 
     void initRoomDropDown() {
@@ -102,12 +95,9 @@ public class FilterDialogFragment extends DialogFragment {
                 .setMinute(localTime.getMinute())
                 .build();
 
-        materialTimePicker.addOnPositiveButtonClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mViewModel.onSelectedTime(materialTimePicker.getHour(),materialTimePicker.getMinute());
-            }
-        });
+        materialTimePicker.addOnPositiveButtonClickListener(
+                v -> mViewModel.onSelectedTime(materialTimePicker.getHour(), materialTimePicker.getMinute())
+        );
 
         materialTimePicker.show(getParentFragmentManager(), "time_picker");
     }

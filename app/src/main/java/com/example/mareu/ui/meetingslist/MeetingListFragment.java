@@ -1,12 +1,6 @@
 package com.example.mareu.ui.meetingslist;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,22 +8,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.mareu.R;
-import com.example.mareu.data.room.Room;
 import com.example.mareu.databinding.FragmentMeetingListBinding;
 import com.example.mareu.injection.ViewModelFactory;
 import com.example.mareu.ui.meetingadd.MeetingAddFragment;
 import com.example.mareu.ui.meetingfilter.FilterDialogFragment;
-import com.example.mareu.ui.meetingslist.listener.OnFilterAppliedListener;
-
-import java.time.LocalTime;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link MeetingListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MeetingListFragment extends Fragment implements OnFilterAppliedListener {
+public class MeetingListFragment extends Fragment {
 
     private FragmentMeetingListBinding binding;
     private MeetingViewModel mViewModel;
@@ -58,7 +53,7 @@ public class MeetingListFragment extends Fragment implements OnFilterAppliedList
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mViewModel.initList();
-        mViewModel.getCombinedMeetings().observe(getViewLifecycleOwner(), list -> mAdapter.submitList(list));
+        mViewModel.getMeetingList().observe(getViewLifecycleOwner(), list -> mAdapter.submitList(list));
         binding.meetingList.setAdapter(mAdapter);
         binding.addMeeting.setOnClickListener(view1 -> getParentFragmentManager()
                 .beginTransaction()
@@ -84,15 +79,9 @@ public class MeetingListFragment extends Fragment implements OnFilterAppliedList
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.filter_icon) {
             FilterDialogFragment filterDialog = new FilterDialogFragment();
-            //filterDialog.setListener(this);
             filterDialog.show(getChildFragmentManager(), "FilterDialog");
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onFilterApplied(LocalTime time, Room room) {
-        mViewModel.onAppliedFilter(time,room);
     }
 }
