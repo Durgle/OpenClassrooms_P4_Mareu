@@ -22,7 +22,7 @@ public class RoomRepositoryUnitTest {
 
     @Before
     public void setup() {
-        mRepository = new RoomRepository(RoomBank.getInstance());
+        mRepository = new RoomRepository(RoomBank.getInstance().getRooms());
     }
 
     @Test

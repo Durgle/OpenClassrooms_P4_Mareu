@@ -3,15 +3,16 @@ package com.example.mareu.data.room;
 import java.util.List;
 
 public class RoomRepository {
-    private final RoomBank mRoomBank;
+
+    private final List<Room> mRooms;
 
     /**
      * RoomRepository constructor
      *
-     * @param roomBank Room bank
+     * @param rooms List of {@link Room}
      */
-    public RoomRepository(RoomBank roomBank) {
-        this.mRoomBank = roomBank;
+    public RoomRepository(List<Room> rooms) {
+        this.mRooms = rooms;
     }
 
     /**
@@ -20,6 +21,6 @@ public class RoomRepository {
      * @return List of {@link Room}
      */
     public List<Room> getRooms() {
-        return this.mRoomBank.getRooms();
+        return mRooms;
     }
 }

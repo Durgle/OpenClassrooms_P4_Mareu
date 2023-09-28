@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.viewmodel.CreationExtras;
 
 import com.example.mareu.data.filter.FilterRepository;
+import com.example.mareu.data.meeting.MeetingBank;
 import com.example.mareu.data.meeting.MeetingRepository;
 import com.example.mareu.data.room.RoomBank;
 import com.example.mareu.data.room.RoomRepository;
@@ -34,8 +35,9 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
 
     private ViewModelFactory() {
         RoomBank roomBank = RoomBank.getInstance();
-        this.mRoomRepository = new RoomRepository(roomBank);
-        this.mMeetingRepository = new MeetingRepository();
+        MeetingBank meetingBank = MeetingBank.getInstance();
+        this.mRoomRepository = new RoomRepository(roomBank.getRooms());
+        this.mMeetingRepository = new MeetingRepository(meetingBank.getMeetings());
         this.mFilterRepository = new FilterRepository();
     }
 

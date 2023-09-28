@@ -7,6 +7,7 @@
     android:fillViewport="true">
 
     <FrameLayout
+        android:id="@+id/add_meeting_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:context=".ui.meetingadd.MeetingAddFragment">
@@ -31,8 +32,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/add_meeting_field_subject"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
+                    android:layout_height="wrap_content" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -78,7 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:hint="@string/participant_email" >
+                android:hint="@string/participant_email">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/add_meeting_field_participants"
@@ -87,14 +87,13 @@
                     android:inputType="textMultiLine"
                     android:lines="4"
                     android:minLines="4"
-                    android:gravity="top|start"/>
+                    android:gravity="top|start" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="@string/participant_email_notice"
-                    android:textStyle="italic"
-                    />
+                    android:textStyle="italic" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton

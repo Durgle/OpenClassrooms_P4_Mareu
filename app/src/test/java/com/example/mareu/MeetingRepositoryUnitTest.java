@@ -6,6 +6,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import com.example.mareu.data.meeting.Meeting;
+import com.example.mareu.data.meeting.MeetingBank;
 import com.example.mareu.data.meeting.MeetingRepository;
 import com.example.mareu.data.room.Room;
 import com.example.mareu.data.room.RoomBank;
@@ -34,14 +35,15 @@ public class MeetingRepositoryUnitTest {
     @Before
     public void setup() {
 
-        mRoomRepository = new RoomRepository(RoomBank.getInstance());
-        mMeetingRepository = new MeetingRepository();
-        mFakeMeetings = mMeetingRepository.addFakeData();
+        mRoomRepository = new RoomRepository(RoomBank.getInstance().getRooms());
+        mFakeMeetings = MeetingBank.getInstance().getMeetings();
+        mMeetingRepository = new MeetingRepository(mFakeMeetings);
     }
 
     @Test
     public void getMeetingListWithSuccess() {
         List<Meeting> meetingList = mMeetingRepository.getMeetingList();
+
         assertThat(meetingList, IsIterableContainingInAnyOrder.containsInAnyOrder(mFakeMeetings.toArray()));
     }
 
@@ -50,17 +52,22 @@ public class MeetingRepositoryUnitTest {
         LocalTime localTime = LocalTime.now();
         Room room = mRoomRepository.getRooms().get(0);
         String subject = "Test Meeting Subject";
-        List<String> participant = new ArrayList<>();
-        participant.add("ParticipantOne@email.com");
-        participant.add("ParticipantTwo@email.com");
+        List<String> participantList = new ArrayList<>();
+        participantList.add("ParticipantOne@email.com");
+        participantList.add("ParticipantTwo@email.com");
+        Meeting meetingAdded = mMeetingRepository.add(localTime, room, subject, participantList);
 
-        Meeting meetingAdded = mMeetingRepository.add(localTime, room, subject, participant);
         assertTrue(mMeetingRepository.getMeetingList().contains(meetingAdded));
+        assertEquals(meetingAdded.getTime(), localTime);
+        assertEquals(meetingAdded.getRoom(), room);
+        assertEquals(meetingAdded.getSubject(), subject);
+        assertEquals(meetingAdded.getParticipantList(), participantList);
     }
 
     @Test
     public void getMeetingByIdWithSuccess() {
         Meeting meeting = mMeetingRepository.getMeetingById(MEETING_ID);
+
         assertEquals(meeting.getId(), MEETING_ID);
     }
 
@@ -68,6 +75,7 @@ public class MeetingRepositoryUnitTest {
     public void deleteMeetingWithSuccess() {
         Meeting meetingToDelete = mMeetingRepository.getMeetingList().get(0);
         mMeetingRepository.delete(meetingToDelete.getId());
+
         assertFalse(mMeetingRepository.getMeetingList().contains(meetingToDelete));
     }
 

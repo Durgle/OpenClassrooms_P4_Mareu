@@ -18,7 +18,7 @@
             android:id="@+id/meeting_item_room_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/remove_button"
+            android:contentDescription="@string/room_color"
             android:padding="16dp"
             android:src="@drawable/circle"
             android:scaleX="2"

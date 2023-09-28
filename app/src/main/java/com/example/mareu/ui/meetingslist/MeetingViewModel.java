@@ -26,7 +26,6 @@ public class MeetingViewModel extends ViewModel {
         this.mMeetingRepository = meetingRepository;
         this.mFilterRepository = filterRepository;
 
-        meetingRepository.addFakeData();
         mFilteredMeetingList.addSource(
                 mMeetingList, meetingList -> combine(meetingList, mFilterRepository.getFilterState().getValue())
         );

@@ -51,10 +51,6 @@ public class FilterViewModel extends ViewModel {
         mFilterRepository.clearFilters();
     }
 
-    public MutableLiveData<FilterState> getFilterState() {
-        return mFilterRepository.getFilterState();
-    }
-
     public LiveData<String> getFormattedSelectedTime() {
         return mFormattedTime;
     }
