@@ -1,0 +1,11 @@
+com.example.mareu
+com.example.mareu.data.filter
+com.example.mareu.data.meeting
+com.example.mareu.data.room
+com.example.mareu.injection
+com.example.mareu.ui.meetingadd
+com.example.mareu.ui.meetingfilter
+com.example.mareu.ui.meetingslist
+com.example.mareu.ui.meetingslist.listener
+com.example.mareu.ui.utils
+com.example.mareu.utils
