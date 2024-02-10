@@ -64,7 +64,7 @@ public class FilterDialogFragment extends DialogFragment {
         mViewModel.getSelectedRoomText().observe(
                 getViewLifecycleOwner(), textRoom -> {
                     if (textRoom != null) {
-                        binding.dialogFieldRoom.setText(textRoom);
+                        binding.dialogFieldRoom.setText(textRoom, false);
                     }
                 });
         return binding.getRoot();
@@ -72,7 +72,7 @@ public class FilterDialogFragment extends DialogFragment {
 
     void initRoomDropDown() {
         ArrayAdapter<Room> adapter = new ArrayAdapter<>(
-                getContext(),
+                requireContext(),
                 androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
                 mViewModel.getRooms()
         );
