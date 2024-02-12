@@ -2,7 +2,6 @@ package com.example.mareu.data.filter;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.mareu.data.room.Room;
 import com.example.mareu.ui.meetingfilter.FilterState;
 
 /**
@@ -13,9 +12,9 @@ public class FilterRepository {
     private final MutableLiveData<FilterState> mFilterState = new MutableLiveData<>();
 
     /**
-     * Get all rooms
+     * Get filter state
      *
-     * @return List of {@link Room}
+     * @return Filter state live data
      */
     public MutableLiveData<FilterState> getFilterState() {
         return this.mFilterState;
