@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 
 import java.util.Objects;
 
+/**
+ * Room entity
+ */
 public class Room {
 
     private final long mId;

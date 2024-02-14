@@ -34,10 +34,19 @@ public class MeetingViewModel extends ViewModel {
         );
     }
 
+    /**
+     * Init meeting list liveData
+     */
     public void initList() {
         this.mMeetingList.setValue(mMeetingRepository.getMeetingList());
     }
 
+    /**
+     * Combine {@link Meeting} list with {@link FilterState} for create a filtered meeting list
+     *
+     * @param meetingList {@link Meeting} List
+     * @param filterState {@link FilterState}
+     */
     private void combine(@Nullable List<Meeting> meetingList, @Nullable FilterState filterState) {
 
         if (meetingList != null && filterState != null) {
@@ -58,11 +67,21 @@ public class MeetingViewModel extends ViewModel {
 
     }
 
+    /**
+     * Delete the given meeting
+     *
+     * @param meetingId Meeting Id
+     */
     public void deleteMeeting(long meetingId) {
         mMeetingRepository.delete(meetingId);
         initList();
     }
 
+    /**
+     * Return the meeting list
+     *
+     * @return Meeting List live data
+     */
     public LiveData<List<Meeting>> getMeetingList() {
         return mFilteredMeetingList;
     }

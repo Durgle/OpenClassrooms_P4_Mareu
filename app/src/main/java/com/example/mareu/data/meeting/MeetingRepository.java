@@ -6,6 +6,9 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class for meeting management
+ */
 public class MeetingRepository {
 
     private long mNextMeetingId = 1;

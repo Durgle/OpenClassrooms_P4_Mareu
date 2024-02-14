@@ -2,6 +2,9 @@ package com.example.mareu.data.room;
 
 import java.util.List;
 
+/**
+ * Class for room management
+ */
 public class RoomRepository {
 
     private final List<Room> mRooms;
@@ -16,7 +19,7 @@ public class RoomRepository {
     }
 
     /**
-     * Get all rooms
+     * Get all {@link Room}
      *
      * @return List of {@link Room}
      */

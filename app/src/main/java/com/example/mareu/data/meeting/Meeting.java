@@ -9,6 +9,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Meeting entity
+ */
 public class Meeting {
 
     private final long mId;
@@ -45,7 +48,7 @@ public class Meeting {
     }
 
     @NonNull
-    public  Room getRoom() {
+    public Room getRoom() {
         return mRoom;
     }
 
@@ -59,6 +62,11 @@ public class Meeting {
         return mParticipantList;
     }
 
+    /**
+     * Create the subject for the {@link Meeting}
+     *
+     * @return Subject
+     */
     @NonNull
     public String getFormattedSubject() {
         return String.format("%s - %s - %s",

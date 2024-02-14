@@ -29,6 +29,11 @@ public class FilterViewModel extends ViewModel {
         }
     }
 
+    /**
+     * Return all existing {@link Room}
+     *
+     * @return {@link Room} list
+     */
     public List<Room> getRooms() {
         return mRoomRepository.getRooms();
     }
@@ -47,18 +52,34 @@ public class FilterViewModel extends ViewModel {
         ));
     }
 
+    /**
+     * Remove all current filter
+     */
     public void clearFilters() {
         mFilterRepository.clearFilters();
     }
 
+    /**
+     * Get the formatted time
+     *
+     * @return formatted time
+     */
     public LiveData<String> getFormattedSelectedTime() {
         return mFormattedTime;
     }
 
+    /**
+     * Get the selected room
+     *
+     * @return selected Room
+     */
     public LiveData<String> getSelectedRoomText() {
         return mFormattedRoomText;
     }
 
+    /**
+     * Valid current filter
+     */
     public void confirmFilters() {
         mFilterRepository.setFilterState(mFilterState.getValue());
     }

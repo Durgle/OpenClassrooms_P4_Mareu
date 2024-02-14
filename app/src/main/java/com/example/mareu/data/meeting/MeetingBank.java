@@ -8,6 +8,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Meeting data storage
+ */
 public class MeetingBank {
 
     private static MeetingBank mInstance;
@@ -17,6 +20,11 @@ public class MeetingBank {
         mMeetings = createFakeMeeting();
     }
 
+    /**
+     * Get a fake {@link Meeting} list
+     *
+     * @return Meeting list
+     */
     private List<Meeting> createFakeMeeting() {
         List<Meeting> fakeMeetings = new ArrayList<>();
         int meetingId = 1;
@@ -38,6 +46,11 @@ public class MeetingBank {
         return fakeMeetings;
     }
 
+    /**
+     * Get list of {@link Meeting} for test
+     *
+     * @return Meeting list
+     */
     public List<Meeting> getMeetingForTest() {
         return Arrays.asList(
                 new Meeting(

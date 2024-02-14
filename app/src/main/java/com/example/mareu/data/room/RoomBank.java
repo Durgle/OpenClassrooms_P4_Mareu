@@ -6,6 +6,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Room data storage
+ */
 public class RoomBank {
 
     private static RoomBank mInstance;
@@ -33,6 +36,11 @@ public class RoomBank {
         return mInstance;
     }
 
+    /**
+     * Get all {@link Room} entity
+     *
+     * @return Room list
+     */
     public List<Room> getRooms() {
         return mRooms;
     }
@@ -47,6 +55,11 @@ public class RoomBank {
         return null;
     }
 
+    /**
+     * Get a random {@link Room}
+     *
+     * @return Room
+     */
     public static Room getRandomRoom() {
         List<Room> list = RoomBank.getInstance().getRooms();
         return list.get(new Random().nextInt(list.size()));
